@@ -1,5 +1,5 @@
 resource "alicloud_vpc" "vpc" {
-  name       = "tf-vpc"
+  vpc_name       = "tf-vpc"
   cidr_block = "192.168.0.0/16"
 }
 
