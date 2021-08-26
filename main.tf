@@ -30,7 +30,7 @@ data "terraform_remote_state" "network" {
     backend   = "oss"
     config    = {
         bucket = "sre-automation-config"
-        key    = "terraform.tfstate"
+        key    = "single-ecs.tfstate"
         prefix = "terraform/tfstate"
         region = "ap-southeast-5"
     }
