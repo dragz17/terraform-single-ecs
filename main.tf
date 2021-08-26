@@ -1,3 +1,14 @@
+resource "alicloud_vpc" "vpc" {
+  name       = "tf-vpc"
+  cidr_block = "192.168.0.0/16"
+}
+
+resource "alicloud_vswitch" "vswitch" {
+  vpc_id            = alicloud_vpc.vpc.id
+  cidr_block        = "192.168.0.0/24"
+  availability_zone = "ap-southeast-5a"
+}
+
 resource "alicloud_security_group" "group" {
   name        = "tf_test_foo"
   description = "foo"
@@ -15,13 +26,14 @@ resource "alicloud_instance" "instance" {
   internet_max_bandwidth_out = 2
 }
 
-resource "alicloud_vpc" "vpc" {
-  name       = "tf-vpc"
-  cidr_block = "192.168.0.0/16"
-}
-
-resource "alicloud_vswitch" "vswitch" {
-  vpc_id            = alicloud_vpc.vpc.id
-  cidr_block        = "192.168.0.0/24"
-  availability_zone = "ap-southeast-5a"
+data "terraform_remote_state" "network" {
+    backend   = "oss"
+    config    = {
+        bucket = "sre-automation-config"
+        key    = "terraform.tfstate"
+        prefix = "terraform/tfstate"
+        region = "ap-southeast-5"
+    }
+    outputs   = {}
+    workspace = "default"
 }
