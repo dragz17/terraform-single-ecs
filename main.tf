@@ -6,7 +6,7 @@ resource "alicloud_vpc" "vpc" {
 resource "alicloud_vswitch" "vswitch" {
   vpc_id            = alicloud_vpc.vpc.id
   cidr_block        = "192.168.0.0/24"
-  availability_zone = "ap-southeast-5a"
+  zone_id           = "ap-southeast-5a"
 }
 
 resource "alicloud_security_group" "default" {
